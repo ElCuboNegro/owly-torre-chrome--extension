@@ -7,7 +7,7 @@ Work in progress. Some information might not apply.
 
 #### monitor your monitoring
 - open console in any Facebook tab
-- you can see logs of what is happening in the background with Data Selfie
+- you can see logs of what is happening in the background with OwO
 
 #### fix for most errors
 - "Have you tried turning it off and on again?" - refresh the Facebook tab or close and open a new one
@@ -27,12 +27,12 @@ Work in progress. Some information might not apply.
 
 ###### chrome local storage
 - you can access settings, your general user data and the prediction
-    - open console in background page or Data Selfie Me page (Alt+Cmd+J on a Mac)
+    - open console in background page or OwO Me page (Alt+Cmd+J on a Mac)
     - copy ```chrome.storage.local.get(function(data){console.log(data)})```
     - press Enter
 
 - you can delete your prediction results to start new
-    - open console in background page or Data Selfie Me page (Alt+Cmd+J on a Mac)
+    - open console in background page or OwO Me page (Alt+Cmd+J on a Mac)
     - copy ```chrome.storage.local.remove(["alchemy", "applymagicsauce", "personality"])```
     - press Enter
 
@@ -51,7 +51,7 @@ Work in progress. Some information might not apply.
 
 - in your Chrome browser go to chrome://extensions/ and tick the box that says "Developer mode"
 - now click "Load unpacked extension..." and choose the build folder you just created
-- you can now use Data Selfie, the extension icon (the eye) should now appear in your toolbar
+- you can now use OwO, the extension icon (the eye) should now appear in your toolbar
 - it is tracking if the eye is black (instead of gray) and if you can see a clock at the bottom left in your facebook window
 
 #### Known bugs
