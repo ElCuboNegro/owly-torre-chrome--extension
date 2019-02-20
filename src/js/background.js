@@ -1,8 +1,8 @@
 const greeting = "Hello human!";
-const db;
+let db;
 const session = false;
 const helper = require("./background_helpers.js");
-const dbstores = require("./dbstores.jsx");
+const dbstores = require("./dbstores.js");
 
 function generalListeners() {
     chrome.runtime.onUpdateAvailable.addListener(function(details) {

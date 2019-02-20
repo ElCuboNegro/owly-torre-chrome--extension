@@ -9,6 +9,15 @@ window.overlayFocused = false;
 window.minLookedDuration = 3;
 window.loc = window.location.href;
 const torreusername = function(){
+    if(xhr.status === 200){
+        var PageHeader = xhr.getResponseHeader("LoginPage");
+        if(loginPageHeader && loginPageHeader !== ""){
+            window.location.replace(loginPageHeader);
+        }
+    }
+
+
+
     var temp = await tracer("https://torre.bio/_a/your-bio");
     var texttemp = temp.split("/")
     return texttemp[(textemp.length - 1)];
@@ -219,7 +228,7 @@ var start = function() {
         typed.init();
     } else {
         helper.sendToBg("contentLoaded", [0]); // session false
-        console.log("Boo! No tracking on this page. Only activity in your newsfeed are tracked.);
+        console.log("Boo! No tracking on this page. Only activity in your newsfeed are tracked.");
     };
 }
 

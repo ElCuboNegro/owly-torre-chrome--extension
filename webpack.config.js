@@ -25,17 +25,10 @@ module.exports = {
         filename: "[name].js"
     },
     module: {
-        loaders: [
-            {
-                test: /\.scss$/,
-                loaders: ["style-loader", "css-loader", "sass-loader"]
-            },
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loaders: ['babel-loader?presets[]=@babel/env,presets[]=es2015'],
-            },
-        ]
+        loaders: [{
+            test: /\.scss$/,
+            loaders: ["style-loader", "css-loader", "sass-loader"]
+        }]
     },
     plugins: debug ? [
         new CleanWebpackPlugin(['build']),

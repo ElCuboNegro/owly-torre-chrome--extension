@@ -26,6 +26,5 @@
         "run_at": "document_idle"
     }],
     "homepage_url": "http://theowo.xyz",
-    "manifest_version": 2,
-    "omnibox": { "keyword": "ds" }
+    "manifest_version": 2
 }
