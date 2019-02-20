@@ -7,8 +7,7 @@
     },
     "browser_action": {
         "default_icon": "img/icon-48.png",
-        "default_title": "OwO",
-        "default_popup": "views/popup.html"
+        "default_title": "OwO"
     },
     "permissions": [
         "storage",
@@ -21,17 +20,12 @@
         "128": "img/icon-128.png"
     },
     "content_scripts": [{
-        "matches": ["https://www.facebook.com/*", "http://www.facebook.com/*"],
+        "matches": ["https://www.facebook.com/*", "http://www.facebook.com/*", "http://*.torre.bio/*", "https://*.torre.bio/*"],
         "js": ["js/content.js"],
         "css": ["css/fblayer.css"],
         "run_at": "document_idle"
     }],
-    "homepage_url": "http://dataselfie.it",
+    "homepage_url": "http://theowo.xyz",
     "manifest_version": 2,
-    "options_ui": {
-        "page": "views/options.html",
-        "chrome_style": true,
-        "open_in_tab": false
-    },
     "omnibox": { "keyword": "ds" }
 }
