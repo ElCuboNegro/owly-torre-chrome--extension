@@ -5,7 +5,7 @@ var $data = $("#data"),
     predData;
 
 function openData() {
-    db = new Dexie("DataSelfieLocalDB");
+    db = new Dexie("OwOLocalDB");
     db.open().catch(function(err) {
         console.log("[DB][<<] error");
         console.error(err.stack || err);

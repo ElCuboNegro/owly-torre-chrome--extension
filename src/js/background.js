@@ -156,7 +156,7 @@ function setTimestamp(status, event) {
 
 function initDB(notify) {
     // if db already exists, dexie only opens
-    db = new Dexie("DataSelfieLocalDB");
+    db = new Dexie("OwOLocalDB");
     db.version(1).stores(dbstores);
     db.open().catch(function(err) {
         console.log("%c[DB][<<] error", helper.clog.magenta);

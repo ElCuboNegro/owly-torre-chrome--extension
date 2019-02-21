@@ -23,7 +23,7 @@ Work in progress. Some information might not apply.
 - go to the "Application" tab
 - Storage > IndexedDB
 - click triangle to expand the subitems
-- "DataSelfieLocalDB" contains all tracked data (this is not saved anywhere else(!), so be careful before clearing this storage)
+- "OwOLocalDB" contains all tracked data (this is not saved anywhere else(!), so be careful before clearing this storage)
 
 ###### chrome local storage
 - you can access settings, your general user data and the prediction

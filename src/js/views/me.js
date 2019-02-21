@@ -1159,7 +1159,7 @@ var main = {
             .always(callback);
     },
     initDB: function() {
-        db = new Dexie("DataSelfieLocalDB");
+        db = new Dexie("OwOLocalDB");
         db.version(1).stores(dbstores);
         db.open().catch(function(err) {
             console.log("%c[DB][<<] error", helper.clog.magenta);
