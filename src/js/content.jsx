@@ -7,7 +7,6 @@ window.lookedFocused = false;
 window.windowFocused = true;
 window.overlayFocused = false;
 window.minLookedDuration = 3;
-window.loc = window.location.href;
 const torreusername = function(){
     let tempvar = async tracer("https://torre.bio/_a/your-bio");
     let texttemp = tempvar.split("/");
