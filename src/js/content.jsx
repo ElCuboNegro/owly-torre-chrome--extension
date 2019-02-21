@@ -1,6 +1,6 @@
 import tracer from 'trace-redirect';
 
-require('./libs/jquery.scrollstop.min.js');
+require('./libs/jquery.scrollstop.min.jsx');
 
 window.sec = 0;
 window.lookedFocused = false;
@@ -8,7 +8,10 @@ window.windowFocused = true;
 window.overlayFocused = false;
 window.minLookedDuration = 3;
 const torreusername = function(){
-    let tempvar = async tracer("https://torre.bio/_a/your-bio");
+    let tempvar = async function(){
+        let temp = await tracer("https://torre.bio/_a/your-bio");
+        return temp;
+    }
     let texttemp = tempvar.split("/");
     return texttemp[(textemp.length - 1)];
 };
@@ -17,10 +20,10 @@ let torreprofiles1degree = [];
 let torreprofiles2degree = [];
 let torreprofiles3degree = [];
 
-let helper = require("./content_helpers.js");
+let helper = require("./content_helpers.jsx");
 let torreurl = "https://torre.bio/api/people/"+torreusername+"/connections";
-let looked = require("./content_looked.js");
-let typed = require("./content_typed.js");
+let looked = require("./content_looked.jsx");
+let typed = require("./content_typed.jsx");
 let throttle = require('throttle-debounce/throttle');
 let kickoff = {
         getProfilesList: function () {

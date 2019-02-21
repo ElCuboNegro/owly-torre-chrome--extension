@@ -1,5 +1,5 @@
 var helper = require("./content_helpers.jsx"),
-    looked = require("./content_looked.js"),
+    looked = require("./content_looked.jsx"),
     inputWords = "",
     prevInputWords = "",
     justSaved = "",
