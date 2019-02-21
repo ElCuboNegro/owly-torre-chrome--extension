@@ -34,10 +34,10 @@ module.exports = {
     },
     saveBackup: function(data, name) {
         console.log("[DB][<<] backup", data);
-        var blob = new Blob([JSON.stringify(data, null, 2)], { type: "text/json;charset=utf-8" })
+        var blob = new Blob([JSON.stringify(data, null, 2)], { type: "text/json;charset=utf-8" });
         chrome.downloads.download({
             url: URL.createObjectURL(blob),
-            filename: "dataselfie_" + name + "_" + moment().format('YYYY-MM-DD') + ".json",
+            filename: "dataselfie_" + name + "_" + moment().format("YYYY-MM-DD") + ".json",
             conflictAction: "overwrite", // "uniquify" / "overwrite" / "prompt"
             saveAs: true // true gives save-as dialogue
         }, this.downloadBar());
@@ -46,12 +46,12 @@ module.exports = {
         var self = this;
         if (_db != undefined) {
             var obj = { dataselfieconsumption: {} };
-            _db.transaction('r', _db.tables, function() {
+            _db.transaction("r", _db.tables, function() {
                 _db.tables.forEach(function(table) {
                     table.toArray().then(function(sessions) {
                         obj.dataselfieconsumption[table.name] = sessions;
                     });
-                })
+                });
             }).then(function() {
                 self.saveBackup(obj, "consumption");
             }).catch(function(err) {
@@ -76,19 +76,19 @@ module.exports = {
         var self = this;
         _db.transaction("rw", _db.looked, _db.clicked, _db.typed, _db.timespent, _db.pages, function() {
             for (var i = 0; i < data.looked.length; i++) {
-                _db.looked.add(_.omit(data.looked[i], ['id']));
+                _db.looked.add(_.omit(data.looked[i], ["id"]));
             }
             for (var i = 0; i < data.clicked.length; i++) {
-                _db.clicked.add(_.omit(data.clicked[i], ['id']));
+                _db.clicked.add(_.omit(data.clicked[i], ["id"]));
             }
             for (var i = 0; i < data.typed.length; i++) {
-                _db.typed.add(_.omit(data.typed[i], ['id']));
+                _db.typed.add(_.omit(data.typed[i], ["id"]));
             }
             for (var i = 0; i < data.timespent.length; i++) {
-                _db.timespent.add(_.omit(data.timespent[i], ['id']));
+                _db.timespent.add(_.omit(data.timespent[i], ["id"]));
             }
             for (var i = 0; i < data.pages.length; i++) {
-                _db.pages.add(_.omit(data.pages[i], ['id']));
+                _db.pages.add(_.omit(data.pages[i], ["id"]));
             }
         }).then(function() {
             console.log("%c[DB][<<] import complete", clog.magenta);
@@ -107,7 +107,7 @@ module.exports = {
         }).catch(function(err) {
             console.error("%cCould not delete [DB][<<]", clog.magenta);
         }).finally(function() {
-            if (_callback) { _callback(); };
+            if (_callback) { _callback(); }
             chrome.tabs.sendMessage(tabid, {
                 displaydata: true,
                 msg: "Database was deleted."
@@ -145,6 +145,6 @@ module.exports = {
     },
     replaceAll: function(str, find, replace) {
         // http://stackoverflow.com/a/1144788
-        return str.replace(new RegExp(this.escapeString(find), 'g'), replace);
+        return str.replace(new RegExp(this.escapeString(find), "g"), replace);
     }
-}
+};

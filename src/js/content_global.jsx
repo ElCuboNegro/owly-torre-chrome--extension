@@ -5,4 +5,4 @@ module.exports = {
     overlayFocused: false,
     minLookedDuration: 3,
     loc: window.location.href
-}
+};

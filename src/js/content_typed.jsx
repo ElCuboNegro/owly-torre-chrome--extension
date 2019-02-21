@@ -1,4 +1,4 @@
-var helper = require("./content_helpers.jsx"),
+let helper = require("./content_helpers.jsx"),
     looked = require("./content_looked.jsx"),
     inputWords = "",
     prevInputWords = "",
@@ -21,12 +21,12 @@ module.exports = {
         var _el = $(el),
             // works with comments, messages and what't on your mind
             spans = _el.find("span[data-text=true]").toArray(),
-            words = _.map(spans, 'innerText').join(" <br> ");
+            words = _.map(spans, "innerText").join(" <br> ");
         return words;
     },
     init: function() {
         var self = this;
-        $("body").on('keyup', function(e) {
+        $("body").on("keyup", function(e) {
             if (window.lookedFocused == true) {
                 // when typing != focused on posts
                 window.lookedFocused = false;
@@ -52,7 +52,7 @@ module.exports = {
                     thought = 0; // stay in thought...
                     prevInputWords = inputWords; // store for later
                 }
-            };
+            }
             e.target.addEventListener("blur", function() {
                 thought++;
                 if (thought === 1) {
@@ -64,4 +64,4 @@ module.exports = {
             });
         });
     }
-}
+};

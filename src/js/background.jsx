@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const greeting = "Hello human!";
 let db;
 const session = false;
@@ -12,7 +13,7 @@ function generalListeners() {
     chrome.runtime.onInstalled.addListener(function(details) {
         console.log("onInstalled", details.reason);
         if (details.reason == "update") {
-            var desc = "";
+            let desc = "";
             db.looked.toArray(function(arr) {
                 for (var i = 0; i < arr.length; i++) {
                     desc += _.join(arr[i].postDesc, " ") + " " + _.join(arr[i].origDesc, " ") + " ";
@@ -38,61 +39,61 @@ function generalListeners() {
     });
     chrome.runtime.onMessage.addListener(function(req, sender, sendRes) {
         switch (req.type) {
-            case "contentLoaded":
-                console.log("[>>] " + sender.tab.url + "\t" + sender.tab.status);
-                if (parseInt(req.data[0]) == 1) {
-                    setTimestamp("start", req.type);
-                };
-                // FIX proper escaping of url
-                db.pages.add({ url: sender.tab.url, timestamp: helper.now(), inSession: req.data[0] });
-                break;
-            case "blur":
-                setTimestamp("stop", req.type);
-                break;
-            case "focus":
+        case "contentLoaded":
+            console.log("[>>] " + sender.tab.url + "\t" + sender.tab.status);
+            if (parseInt(req.data[0]) == 1) {
                 setTimestamp("start", req.type);
-                break;
-            case "closeWindow":
-                setTimestamp("stop", req.type);
-                break;
-            case "profilePic":
-                chrome.storage.local.set({
-                    "dsUser": {
-                        profilePic: {
-                            dataUri: req.data[0],
-                            rawImg: req.data[1]
-                        },
-                        profileLink: req.data[2],
-                        userName: req.data[3]
-                    }
-                });
-                break;
-            case "backup":
-                helper.backup(db);
-                break;
-            case "pred-backup":
-                helper.backup();
-                break;
-            case "import":
-                if (req.data.dataselfie != undefined) {
-                    helper.import(db, req.data.dataselfie, sender.tab.id);
-                } else {
-                    helper.importError(sender.tab.id);
+            }
+            // FIX proper escaping of url
+            db.pages.add({ url: sender.tab.url, timestamp: helper.now(), inSession: req.data[0] });
+            break;
+        case "blur":
+            setTimestamp("stop", req.type);
+            break;
+        case "focus":
+            setTimestamp("start", req.type);
+            break;
+        case "closeWindow":
+            setTimestamp("stop", req.type);
+            break;
+        case "profilePic":
+            chrome.storage.local.set({
+                "dsUser": {
+                    profilePic: {
+                        dataUri: req.data[0],
+                        rawImg: req.data[1]
+                    },
+                    profileLink: req.data[2],
+                    userName: req.data[3]
                 }
-                break;
-            case "delete":
-                helper.resetDB(db, initDB, sender.tab.id);
-                chrome.storage.local.clear(initOptions);
-                break;
-            case "saveLooked":
-                db.looked.add(req.data);
-                break;
-            case "saveClicked":
-                db.clicked.add(req.data);
-                break;
-            case "saveTyped":
-                db.typed.add(req.data);
-                break;
+            });
+            break;
+        case "backup":
+            helper.backup(db);
+            break;
+        case "pred-backup":
+            helper.backup();
+            break;
+        case "import":
+            if (req.data.dataselfie != undefined) {
+                helper.import(db, req.data.dataselfie, sender.tab.id);
+            } else {
+                helper.importError(sender.tab.id);
+            }
+            break;
+        case "delete":
+            helper.resetDB(db, initDB, sender.tab.id);
+            chrome.storage.local.clear(initOptions);
+            break;
+        case "saveLooked":
+            db.looked.add(req.data);
+            break;
+        case "saveClicked":
+            db.clicked.add(req.data);
+            break;
+        case "saveTyped":
+            db.typed.add(req.data);
+            break;
         }
         return true;
     });
@@ -112,18 +113,18 @@ function generalListeners() {
     // STATUS BAR [keyword in manifest.json] + tab
     chrome.omnibox.onInputEntered.addListener(function(text) {
         switch (text) {
-            case "reset db":
-                helper.resetDB(db, initDB);
-                break;
-            case "delete db":
-                helper.resetDB(db);
-                break;
-            case "init db":
-                initDB(true);
-                break;
-            case "ds":
-                chrome.tabs.create({ url: chrome.runtime.getURL("views/me.html") });
-                break;
+        case "reset db":
+            helper.resetDB(db, initDB);
+            break;
+        case "delete db":
+            helper.resetDB(db);
+            break;
+        case "init db":
+            initDB(true);
+            break;
+        case "ds":
+            chrome.tabs.create({ url: chrome.runtime.getURL("views/me.html") });
+            break;
         }
     });
 }
@@ -137,7 +138,7 @@ function saveTimestamp(now, status, event) {
                 db.timespent.add({ start: now });
             } else if (status == "stop" && last.stop == undefined) {
                 db.timespent.update(last.id, { stop: now });
-            };
+            }
         });
     });
 }
@@ -152,7 +153,7 @@ function setTimestamp(status, event) {
     }
     helper.setBrowserActionIcon(status);
     saveTimestamp(moment().format(), status, event);
-};
+}
 
 function initDB(notify) {
     // if db already exists, dexie only opens
@@ -191,7 +192,7 @@ function storagePrep() {
             helper.checkCrash(db, db.timespent);
         } else {
             console.log("%c[DB][<<] timespent is empty.", helper.clog.magenta);
-        };
+        }
     });
 }
 
@@ -201,7 +202,7 @@ function init() {
     initOptions();
     generalListeners();
     helper.setBrowserActionIcon(session);
-    if (devMode) { helper.getPermissions(); };
+    if (devMode) { helper.getPermissions(); }
 }
 
 init();

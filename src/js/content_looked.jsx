@@ -24,7 +24,7 @@ var helper = require("./content_helpers.jsx"),
                 type = "user";
             } else if (card.indexOf("page") > -1) {
                 type = "page";
-            };
+            }
             return type;
         },
         updateCacheObj: function(_infocus) {
@@ -46,7 +46,7 @@ var helper = require("./content_helpers.jsx"),
                 postData.postImg = imgs.filter(function() {
                     return ($(this).attr("width") > 100 || $(this).width() > 100);
                 }).attr("src");
-            };
+            }
             postObj.find("div._1dwg p").map(function() {
                 postData.postDesc.push($(this).text());
             });
@@ -55,13 +55,13 @@ var helper = require("./content_helpers.jsx"),
                 _origDesc.children().map(function() {
                     postData.origDesc.push($(this).text());
                 });
-            };
+            }
             if (postObj.find("div._5g-l span").length > 0) {
                 postData.suggested[0] = 1;
-            };
+            }
             if (postObj.find("a.uiStreamSponsoredLink").length > 0) {
                 postData.suggested[1] = 1;
-            };
+            }
 
 
             // h5 e.g. Regina likes this.
@@ -88,7 +88,7 @@ var helper = require("./content_helpers.jsx"),
                     type = self.getUserType(card),
                     id = card.match(/\d{5,}/g)[0];
                 postData.origPoster = { name: name, type: type, id: id };
-            };
+            }
 
             this.cachedObj = postData;
         },
@@ -97,10 +97,10 @@ var helper = require("./content_helpers.jsx"),
                 // if this fails, obj will not be saved in DB
                 // logic.cachedObj is still unchanged
                 _obj.duration = _sec;
-                _obj.timestamp = moment(helper.now()).subtract(_sec, 'seconds').format();
+                _obj.timestamp = moment(helper.now()).subtract(_sec, "seconds").format();
                 helper.sendToBg("saveLooked", _obj);
                 console.log("looked", _sec + " >= " + window.minLookedDuration, _obj.postActivity);
-            };
+            }
             this.resetClock();
             if (callback) { callback(); }
         },
@@ -134,7 +134,7 @@ var helper = require("./content_helpers.jsx"),
             $("#"+this.loggedId).removeClass("highlighted");
         },
         cachedObj: {},
-    }
+    };
 
 module.exports = {
     logic: logic, // separated from exports because of scoping problem
@@ -175,9 +175,9 @@ module.exports = {
                     logic.updateCacheObj(infocusId);
                     logic.loggedId = infocusId;
                     break;
-                };
+                }
             }
-        };
+        }
     },
     getPagePosts: function() {
         var posts = newsfeedEl.find("div._4-u2.mbm._5v3q._4-u8").children($("div._3ccb._4-u8"));
@@ -197,8 +197,8 @@ module.exports = {
     checkPhotoOverlay: function(delay, callback) {
         // delay because of the loading of the overlay
         setTimeout(function() {
-            var photoOverlay = $("#photos_snowlift").css('z-index');
-            if (photoOverlay == 'auto' || photoOverlay == undefined) {
+            var photoOverlay = $("#photos_snowlift").css("z-index");
+            if (photoOverlay == "auto" || photoOverlay == undefined) {
                 // there is no overlay, so fire that callback
                 window.overlayFocused = false;
                 console.log("no overlay", window.overlayFocused);
@@ -215,10 +215,10 @@ module.exports = {
     checkLocChanged: function() {
         setTimeout(function() {
             if (window.loc != window.location.href) {
-                console.log("location change", window.loc, window.location.href)
+                console.log("location change", window.loc, window.location.href);
                 logic.logLooked(logic.cachedObj, window.sec);
                 window.loc = window.location.href;
-            };
+            }
         }, 500);
     },
     updateNewsFeed: function() {

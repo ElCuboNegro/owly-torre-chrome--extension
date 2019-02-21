@@ -69,6 +69,7 @@
     background: linear-gradient(to top, #ff7a00 0%, #f2d163 100%);
     background: -moz-linear-gradient(transparent, transparent);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   

@@ -23,7 +23,7 @@ module.exports = {
     },
     replaceAll: function(str, find, replace) {
         // http://stackoverflow.com/a/1144788
-        return str.replace(new RegExp(this.escapeString(find), 'g'), replace);
+        return str.replace(new RegExp(this.escapeString(find), "g"), replace);
     },
     getFromTimeRange: function(_table, _key, _from, _to) {
         // e.g. db.timespent,
@@ -39,6 +39,6 @@ module.exports = {
     },
     getByteSize: function(str) {
         // http://stackoverflow.com/a/34332105
-        return (new TextEncoder('utf-8').encode(str)).length;
+        return (new TextEncoder("utf-8").encode(str)).length;
     }
-}
+};

@@ -1,7 +1,7 @@
 const debug = process.env.NODE_ENV !== "prod";
-const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require("webpack");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const copyPatterns = [
     { from: "./manifest.json", to: "../manifest.json" },
     { from: "./img", to: "../img" },
@@ -37,12 +37,12 @@ module.exports = {
         filename: "[name].js"
     },
     plugins: debug ? [
-        new CleanWebpackPlugin(['build']),
-        new webpack.ProvidePlugin({ '$': 'jquery', 'Dexie': 'dexie', 'moment': 'moment', '_': 'lodash' }),
+        new CleanWebpackPlugin(["build"]),
+        new webpack.ProvidePlugin({ "$": "jquery", "Dexie": "dexie", "moment": "moment", "_": "lodash" }),
         new CopyWebpackPlugin(copyPatterns)
     ] : [
-        new CleanWebpackPlugin(['build']),
-        new webpack.ProvidePlugin({ '$': 'jquery', 'Dexie': 'dexie', 'moment': 'moment', '_': 'lodash' }),
+        new CleanWebpackPlugin(["build"]),
+        new webpack.ProvidePlugin({ "$": "jquery", "Dexie": "dexie", "moment": "moment", "_": "lodash" }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false, compress: false }),

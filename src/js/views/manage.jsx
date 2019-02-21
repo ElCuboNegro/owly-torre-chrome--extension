@@ -1,4 +1,4 @@
-var $data = $("#data"),
+let $data = $("#data"),
     $status = $("#status p"),
     db,
     localData,
@@ -19,12 +19,12 @@ function openData() {
 function getData() {
     console.log("update displayed data");
     var obj = { dataselfie: {} };
-    db.transaction('r', db.tables, function() {
+    db.transaction("r", db.tables, function() {
         db.tables.forEach(function(table) {
             table.toArray().then(function(sessions) {
                 obj.dataselfie[table.name] = sessions;
             });
-        })
+        });
     }).then(function() {
         localData = JSON.stringify(obj, null, 2);
         displayData(localData);
@@ -74,27 +74,27 @@ function start() {
     $("button").click(function(e) {
         $status.text("");
         switch (e.target.id) {
-            case "backup":
-                chrome.runtime.sendMessage({
-                    type: "backup",
-                    data: []
-                });
-                break;
-            case "pred-backup":
-                chrome.runtime.sendMessage({
-                    type: "pred-backup",
-                    data: []
-                });
-                break;
-            case "import":
-                $("#choose-file").click();
-                break;
-            case "delete":
-                chrome.runtime.sendMessage({
-                    type: "delete",
-                    data: []
-                });
-                break;
+        case "backup":
+            chrome.runtime.sendMessage({
+                type: "backup",
+                data: []
+            });
+            break;
+        case "pred-backup":
+            chrome.runtime.sendMessage({
+                type: "pred-backup",
+                data: []
+            });
+            break;
+        case "import":
+            $("#choose-file").click();
+            break;
+        case "delete":
+            chrome.runtime.sendMessage({
+                type: "delete",
+                data: []
+            });
+            break;
         }
     });
     chrome.runtime.onMessage.addListener(function(req, sender, sendRes) {

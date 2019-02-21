@@ -57,13 +57,13 @@ var activity = {
             .call(xAxis);
 
         this.getMinDate = function() {
-            return moment().subtract(self.dayChange + self.timespan, "days").startOf('day').toDate();
-        }
+            return moment().subtract(self.dayChange + self.timespan, "days").startOf("day").toDate();
+        };
 
         this.getMaxDate = function(real) {
             // hack: add day to have a space buffer for showing data
-            return moment().subtract(self.dayChange, "days").add(1, "days").startOf('day').toDate();
-        }
+            return moment().subtract(self.dayChange, "days").add(1, "days").startOf("day").toDate();
+        };
 
         var mindate = this.getMinDate(),
             maxdate = this.getMaxDate();
@@ -94,9 +94,9 @@ var activity = {
             grid.append("line")
                 .attr("class", "gridline")
                 .attr("x1", this.xScale(0))
-                .attr("y1", this.yScale(moment().subtract(i, "days").startOf('day').toDate()))
+                .attr("y1", this.yScale(moment().subtract(i, "days").startOf("day").toDate()))
                 .attr("x2", this.xScale(24))
-                .attr("y2", this.yScale(moment().subtract(i, "days").startOf('day').toDate()));
+                .attr("y2", this.yScale(moment().subtract(i, "days").startOf("day").toDate()));
         }
 
         this.tooltip = d3.select("#consumption-vis").append("div")
@@ -111,7 +111,7 @@ var activity = {
                     betw = moment(dString, "MMM-DD-YY hh:mm:sa").isBetween(b, a, null, []);
                 // diff should be positive and max the timespan to show in graph
                 return betw;
-            };
+            }
 
             db.looked.filter(timeDiff).toArray(function(lookedArr) {
                 self.addPoints("elLooked", lookedArr, "#00FF80", "", 0);
@@ -150,7 +150,7 @@ var activity = {
             if (e.target.value < 1) {
                 e.target.value = 1;
             }
-        })
+        });
 
     },
     addPoints: function(classname, array, color1, color2, order) {
@@ -206,7 +206,7 @@ var activity = {
             });
 
     }
-}
+};
 
 var topList = {
     title: function(type, len) {
@@ -222,14 +222,14 @@ var topList = {
         }).toArray(function(arr) {
             // http://stackoverflow.com/a/38774930
             var modArr = _(arr)
-                .groupBy('posters[0].name')
+                .groupBy("posters[0].name")
                 .map(function(k, v) {
                     return {
                         name: v,
-                        duration: _.sumBy(k, 'duration')
-                    }
+                        duration: _.sumBy(k, "duration")
+                    };
                 })
-                .orderBy(['duration'], ['desc']).value();
+                .orderBy(["duration"], ["desc"]).value();
             var capped = _.take(modArr, 10);
             console.log("%c" + type, helper.clog.green, modArr, capped);
             if (type == "user") {
@@ -256,7 +256,7 @@ var topList = {
                 .append($("<br>"))
                 .append($("<div>", { class: "line" }).css("width", perc + "%"))
                 .append($("<div>", { class: "line-dashed" }).css("width", rest + "%"));
-        };
+        }
     },
     likes: function() {
         $("#top-like .error").empty();
@@ -277,9 +277,9 @@ var topList = {
             orderedLikes = _(likes)
                 .countBy("path")
                 .map(function(count, path) {
-                    return { count: count, path: path }
+                    return { count: count, path: path };
                 })
-                .sortBy('count')
+                .sortBy("count")
                 .reverse()
                 .value();
             return orderedLikes;
@@ -309,14 +309,14 @@ var topList = {
                     };
                 addLike(i);
             } else {
-                errMsg()
+                errMsg();
             }
         }).catch(function(err) {
             console.log("Likes count error: " + err);
             errMsg();
         });
     }
-}
+};
 
 var nlpList = {
     list: function(data, name) {
@@ -345,7 +345,7 @@ var nlpList = {
                 );
         });
     },
-}
+};
 
 var oceanPlot = function(dataIBM, dataAMS) {
     console.log("%cbig 5", helper.clog.yellow, dataIBM);
@@ -353,10 +353,10 @@ var oceanPlot = function(dataIBM, dataAMS) {
     $("#ocean-vis").empty();
     // SETUP
     w = $("#ocean-vis").width(),
-        h = 260,
-        pad = 20,
-        lpad = 210,
-        elSize = 8;
+    h = 260,
+    pad = 20,
+    lpad = 210,
+    elSize = 8;
 
     var svg = d3.select("#ocean-vis")
         .append("svg")
@@ -374,7 +374,7 @@ var oceanPlot = function(dataIBM, dataAMS) {
             } else if (i == 2) {
                 return "100th percentile";
             } else {
-                return "0 percentile"
+                return "0 percentile";
             }
         })
         .tickSize(6);
@@ -500,7 +500,7 @@ var oceanPlot = function(dataIBM, dataAMS) {
                 .duration(100)
                 .style("opacity", 0);
         });
-}
+};
 
 var religionList = function(rels) {
     console.log("%creligion", helper.clog.green, rels);
@@ -518,8 +518,8 @@ var religionList = function(rels) {
                 )
                 .append($("<p>").text(label))
             );
-    })
-}
+    });
+};
 
 var politicsList = function(pols) {
     console.log("%cpolitics", helper.clog.green, pols);
@@ -538,8 +538,8 @@ var politicsList = function(pols) {
                 )
                 .append($("<p>").text(label))
             );
-    })
-}
+    });
+};
 
 var consumptionPrefList = function(prefs) {
     $("#shopping-container .Rtable").empty();
@@ -562,7 +562,7 @@ var consumptionPrefList = function(prefs) {
             .append($("<div>", { class: "typed-text cell" }).text(likelyText))
             .append($("<div>", { class: "cell" }).text(_.replace(item.name, "Likely to ", "")));
     });
-}
+};
 
 var otherPredList = function(preds, interoprets) {
     var otherPredContainer = $("#other-predictions-container .Rtable");
@@ -585,7 +585,7 @@ var otherPredList = function(preds, interoprets) {
     otherPredContainer.append($("<div>", { class: "looked-text cell" }).text(_.round(leadership.value * 100, 0) + "%"))
         .append($("<div>", { class: "cell" }).text(leadership.trait));
 
-}
+};
 
 var constructSummary = function(a, b, c, d, e, f) {
     var alist = [" a laid back", " an easily stressed"];
@@ -610,8 +610,8 @@ var constructSummary = function(a, b, c, d, e, f) {
         satisfied = " and is" + satisfied;
     }
 
-    return 'You\'re' + alist[a] + blist[b] + clist[c] + ibm + satisfied + '';
-}
+    return "You're" + alist[a] + blist[b] + clist[c] + ibm + satisfied + "";
+};
 
 var loadPredictions = function(key) {
     var noPrediction = function(name) {
@@ -619,7 +619,7 @@ var loadPredictions = function(key) {
             .append($("<p>", { class: "error" })
                 .text("No analysis could be made.")
                 .css("display", "block"));
-    }
+    };
     chrome.storage.local.get(null, function(res) {
         if (res.alchemy2 && key == "alchemy2") {
             body.find(".alchemy-last span").text(moment(res.alchemy2.lastUpdated).format("MMM-DD-YY"));
@@ -628,7 +628,7 @@ var loadPredictions = function(key) {
                 nlpList.list(res.alchemy2.predData.categories, "categories");
             } else {
                 noPrediction("categories");
-            };
+            }
             if (res.alchemy2.predData.entities.length > 0) {
                 nlpList.sentList(res.alchemy2.predData.entities, "entities");
             } else {
@@ -671,7 +671,7 @@ var loadPredictions = function(key) {
                 if (res.applymagicsauce || res.personality || res.alchemy2) {
                     $("#the-cool-stuff").animate({ opacity: 1 }, 500);
                     $("#usage-message").delay(200).hide();
-                    $("#the-good-stuff").delay(200).css('position', 'relative').animate({ opacity: 1 }, 200);
+                    $("#the-good-stuff").delay(200).css("position", "relative").animate({ opacity: 1 }, 200);
                     if (res.applymagicsauce) {
                         if (res.personality) {
                             var shop = res.personality.predData.consumption_preferences[0].consumption_preferences;
@@ -689,7 +689,7 @@ var loadPredictions = function(key) {
                         var amspreds = res.applymagicsauce.predData.predictions;
                         var politics = _.chain(amspreds)
                             .filter(function(n) { return n.trait.indexOf("Politics") > -1; })
-                            .sortBy('value')
+                            .sortBy("value")
                             .reverse()
                             .value()[0].trait.toLowerCase();
                         if (politics.indexOf("liberal") > -1) {
@@ -702,9 +702,9 @@ var loadPredictions = function(key) {
                             var politcsIndex = 3;
                         }
 
-                        var neurotI = _.find(amspreds, function(o) { return o.trait == 'BIG5_Neuroticism'; }),
-                            genderI = _.find(amspreds, function(o) { return o.trait == 'Female'; }),
-                            satisI = _.find(amspreds, function(o) { return o.trait == 'Satisfaction_Life'; });
+                        var neurotI = _.find(amspreds, function(o) { return o.trait == "BIG5_Neuroticism"; }),
+                            genderI = _.find(amspreds, function(o) { return o.trait == "Female"; }),
+                            satisI = _.find(amspreds, function(o) { return o.trait == "Satisfaction_Life"; });
 
                         var a = neurotI.value < 0.5 ? 0 : 1,
                             b = politcsIndex,
@@ -718,8 +718,8 @@ var loadPredictions = function(key) {
                         $("#summary-text").text(sentence);
 
                         var initFBDone = false;
-                        var fburl = 'https://dataselfie.it/my/' + seq + '?share';
-                        var twurl = 'https://twitter.com/intent/tweet?text="' + sentence + '"&via=dataselfie&url=https://dataselfie.it';
+                        var fburl = "https://dataselfie.it/my/" + seq + "?share";
+                        var twurl = "https://twitter.com/intent/tweet?text=\"" + sentence + "\"&via=dataselfie&url=https://dataselfie.it";
                         $("#fbshare").attr("href", fburl);
                         $("#twshare").attr("href", twurl);
 
@@ -748,24 +748,24 @@ var loadImgClassifications = function() {
                 .append($("<br>"))
                 .append($("<div>", { class: "line" }).css("width", perc + "%"))
                 .append($("<div>", { class: "line-dashed" }).css("width", rest + "%"));
-        };
-    }
+        }
+    };
     db.transaction("r", db.looked, function() {
         db.looked.toArray(function(arr) {
             return _(arr)
-                .filter(function(o) { return o.predImg })
-                .filter(function(o) { return o.predImg.pred !== null })
-                .uniqBy('postImg')
+                .filter(function(o) { return o.predImg; })
+                .filter(function(o) { return o.predImg.pred !== null; })
+                .uniqBy("postImg")
                 .value();
         }).then(function(validImgs) {
             var imgPredThreshold = 0.5;
             $("#img-pred-threshold").text("\nshown classifications have a probability of >= " + imgPredThreshold);
             var classes = _(validImgs)
-                .map('predImg')
-                .map('pred')
+                .map("predImg")
+                .map("pred")
                 .flatten()
-                .filter(function(o) { return o.prob >= imgPredThreshold })
-                .map('class')
+                .filter(function(o) { return o.prob >= imgPredThreshold; })
+                .map("class")
                 .value();
             $("#still-loading").hide();
             if (validImgs.length > 0) {
@@ -775,9 +775,9 @@ var loadImgClassifications = function() {
                         return {
                             count: count,
                             cclass: cclass
-                        }
+                        };
                     })
-                    .sortBy('count').reverse()
+                    .sortBy("count").reverse()
                     .value();
                 var capped = _.take(sortedClasses, 10);
                 fillImgList(capped);
@@ -788,7 +788,7 @@ var loadImgClassifications = function() {
             console.log("%cobject detection", helper.clog.green, validImgs.length + " valid imgs", sortedClasses, capped);
         });
     });
-}
+};
 
 var apis = {
     fired: {
@@ -825,38 +825,38 @@ var apis = {
     postReq: function(endpoint, data, callback) {
         var self = this;
         $.ajax({
-                method: "POST",
-                url: apiUrl + endpoint,
-                contentType: "application/json",
-                data: JSON.stringify(data)
-            })
+            method: "POST",
+            url: apiUrl + endpoint,
+            contentType: "application/json",
+            data: JSON.stringify(data)
+        })
             .done(function(msg, obj) {
                 console.log("API response", endpoint, msg);
                 switch (endpoint) {
-                    case "alchemy2":
-                        chrome.storage.local.set({
-                            "alchemy2": msg
-                        }, function() {
-                            self.checkApisDone();
-                        });
-                        break;
-                    case "personality":
-                        chrome.storage.local.set({
-                            "personality": msg
-                        }, function() {
-                            self.checkApisDone();
-                        });
-                        break;
-                    case "applymagicsauce":
-                        chrome.storage.local.set({
-                            "applymagicsauce": msg
-                        }, function() {
-                            self.checkApisDone();
-                        });
-                        break;
-                    case "yolo":
-                        callback(msg);
-                        break;
+                case "alchemy2":
+                    chrome.storage.local.set({
+                        "alchemy2": msg
+                    }, function() {
+                        self.checkApisDone();
+                    });
+                    break;
+                case "personality":
+                    chrome.storage.local.set({
+                        "personality": msg
+                    }, function() {
+                        self.checkApisDone();
+                    });
+                    break;
+                case "applymagicsauce":
+                    chrome.storage.local.set({
+                        "applymagicsauce": msg
+                    }, function() {
+                        self.checkApisDone();
+                    });
+                    break;
+                case "yolo":
+                    callback(msg);
+                    break;
                 }
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
@@ -865,24 +865,24 @@ var apis = {
                         var predContainer = body.find("." + endpoint + "-content p.error"),
                             statusInfo = (jqXHR.responseJSON) ? ": " + jqXHR.responseJSON.statusInfo : "",
                             language = (jqXHR.responseJSON) ? " " + jqXHR.responseJSON.language : "",
-                            text = 'Sorry, there has been an server error ';
+                            text = "Sorry, there has been an server error ";
                         if (jqXHR.status == 413) {
                             statusInfo = ": Data too large. Please email support@dataselfie.it";
                         }
                         switch (endpoint) {
-                            case "alchemy2":
-                                text += '(' + jqXHR.status + helper.replaceAll(statusInfo, "-", " ") + language + ').';
-                                break;
-                            case "personality":
-                                text += '(' + jqXHR.status + helper.replaceAll(statusInfo, "-", " ") + ').';
-                                break;
-                            case "applymagicsauce":
-                                text += '(' + jqXHR.status + helper.replaceAll(statusInfo, "-", " ") + ').';
-                                break;
-                            case "yolo":
-                                text += '(' + jqXHR.status + helper.replaceAll(statusInfo, "-", " ") + ').';
-                                break;
-                        };
+                        case "alchemy2":
+                            text += "(" + jqXHR.status + helper.replaceAll(statusInfo, "-", " ") + language + ").";
+                            break;
+                        case "personality":
+                            text += "(" + jqXHR.status + helper.replaceAll(statusInfo, "-", " ") + ").";
+                            break;
+                        case "applymagicsauce":
+                            text += "(" + jqXHR.status + helper.replaceAll(statusInfo, "-", " ") + ").";
+                            break;
+                        case "yolo":
+                            text += "(" + jqXHR.status + helper.replaceAll(statusInfo, "-", " ") + ").";
+                            break;
+                        }
                         predContainer.text(text).show();
                     }
                 });
@@ -965,7 +965,7 @@ var apis = {
             // but make prediction based on truncated/most recent data
             self.newCall("alchemy2", origLen, function() {
                 self.fired.alchemy2 = 1;
-                var escapedDesc = truncDesc.replace(/"/g, '\\"');
+                var escapedDesc = truncDesc.replace(/"/g, "\\\"");
                 self.postReq("alchemy2", { "desc": escapedDesc, "length": origLen });
             });
 
@@ -1001,7 +1001,7 @@ var apis = {
             console.log("%ctyped content", helper.clog.yellow, truncSize, "bytes,", truncTyped.split(" ").length, "words sent of total", origLen, "words\n", cleanTyped);
             self.newCall("personality", origLen, function() {
                 self.fired.personality = 1;
-                var escapedTyped = truncTyped.replace(/"/g, '\\"');
+                var escapedTyped = truncTyped.replace(/"/g, "\\\"");
                 self.postReq("personality", { "typed": escapedTyped, "length": origLen });
             });
         });
@@ -1010,7 +1010,7 @@ var apis = {
         var self = this;
         db.looked.toArray(function(arr) {
             // this includes pages whose posts you see directly or through shares of others
-            return _(arr).map('posters').flatten().filter({ type: "page" }).map('id').flatten().uniq().value();
+            return _(arr).map("posters").flatten().filter({ type: "page" }).map("id").flatten().uniq().value();
         }).then(function(likeids) {
             topList.title("page", likeids.length);
             console.log("%cfacebook pages ids", helper.clog.green, likeids);
@@ -1029,7 +1029,7 @@ var apis = {
             });
         }).then(function(allImgPosts) {
             var allImgUrls = _(allImgPosts)
-                .map('postImg')
+                .map("postImg")
                 .uniq()
                 .value();
             console.log("%cimages from posts you looked at", helper.clog.green, allImgUrls);
@@ -1039,11 +1039,11 @@ var apis = {
                 .filter(function(o) {
                     return o.predImg === undefined;
                 })
-                .map('postImg')
+                .map("postImg")
                 .uniq()
                 .value();
             if (withoutPred.length > 0) {
-                console.log("Yes API call. New image urls. yolo ", withoutPred.length)
+                console.log("Yes API call. New image urls. yolo ", withoutPred.length);
                 self.newYoloCalls(withoutPred, withoutPred.length);
             } else {
                 loadImgClassifications();
@@ -1057,7 +1057,7 @@ var apis = {
             end = _.max([(index - size), 0]);
         self.postReq("yolo", { "urls": _.slice(allUrls, end, start) }, function(msg) {
             for (var i = msg.predData.length - 1; i >= 0; i--) {
-                self.saveYoloPred(msg.predData[i].url, msg.predData[i])
+                self.saveYoloPred(msg.predData[i].url, msg.predData[i]);
             }
             if ((start - size) > 0) {
                 self.newYoloCalls(allUrls, start - size);
@@ -1079,7 +1079,7 @@ var apis = {
             }
         });
     }
-}
+};
 
 var main = {
     userInfo: function() {
@@ -1091,7 +1091,7 @@ var main = {
             for (var i = 0; i < timespentArr.length; i++) {
                 var a = moment(timespentArr[i]["stop"]); // later
                 var b = moment(timespentArr[i]["start"]); // earlier
-                totalTimeSpent += a.diff(b, 'minutes', true);
+                totalTimeSpent += a.diff(b, "minutes", true);
                 var startToNow = now.diff(b);
                 if (startToNow > first) {
                     first = startToNow;
@@ -1113,9 +1113,9 @@ var main = {
         });
     },
     progressAnimation: function(showAnalysis) {
-        $('html, body').css({
-            overflow: 'hidden',
-            height: '100%'
+        $("html, body").css({
+            overflow: "hidden",
+            height: "100%"
         });
 
         $("#days-increment").attr("type", "number");
@@ -1136,9 +1136,9 @@ var main = {
                         $("#loading").show();
                     }
                     $("#the-cool-stuff").animate({ opacity: 1 }, 500);
-                    $('html, body').css({
-                        overflow: 'auto',
-                        height: 'auto'
+                    $("html, body").css({
+                        overflow: "auto",
+                        height: "auto"
                     });
                     $("footer").show();
                 } else {
@@ -1149,9 +1149,9 @@ var main = {
     },
     getApiThreshold: function(callback) {
         $.ajax({
-                method: "GET",
-                url: apiUrl + "api/threshold"
-            })
+            method: "GET",
+            url: apiUrl + "api/threshold"
+        })
             .done(function(msg) {
                 apiThreshold = msg;
                 console.log("%cServer call for thresholds.", helper.clog.magenta, apiThreshold);
@@ -1193,7 +1193,7 @@ var main = {
             });
         });
     },
-}
+};
 
 $(document).ready(function() {
     main.getApiThreshold(main.initDB);

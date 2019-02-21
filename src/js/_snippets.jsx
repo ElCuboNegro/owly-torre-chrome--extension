@@ -31,7 +31,7 @@ $("#stream_pagelet").find("div._4-u2.mbm._5v3q._4-u8").children($("div._3ccb._4-
         var h6link = $(h6),
             name = h6link.text(),
             card = h6link.attr("data-hovercard"),
-            type = card.match('hovercard/(.*).php')[1],
+            type = card.match("hovercard/(.*).php")[1],
             id = card.match(/\d{5,}/g)[0];
         console.log(name, type, id);
     }
@@ -44,20 +44,20 @@ $("#stream_pagelet").find("div._4-u2.mbm._5v3q._4-u8").children($("div._3ccb._4-
     var postObj = $(this);
     var h5a = postObj.find("h5 a"); // post head links
 
-    console.log(i)
-        // loop through every link in the post head
+    console.log(i);
+    // loop through every link in the post head
     h5a.each(function() {
         var h5link = $(this);
         var card = h5link.attr("data-hovercard");
         if (card != undefined) {
             // user, id, type of user
-            console.log(h5link.text() + "\t" + card.match(/\d{5,}/g)[0] + "\t" + card.match('hovercard/(.*).php')[1]);
+            console.log(h5link.text() + "\t" + card.match(/\d{5,}/g)[0] + "\t" + card.match("hovercard/(.*).php")[1]);
         } else if (h5link.attr("href") != "#") {
             // ignore href == "#", usually e.g. "2 others"
             // original link, could be post, video etc
             console.log("++++++", h5link.attr("href"));
         }
-    })
+    });
 });
 
 // type of users (page, user, group)
@@ -77,7 +77,7 @@ $("#stream_pagelet").find("div._4-u2.mbm._5v3q._4-u8").children($("div._3ccb._4-
             }
             console.log(type);
         }
-    })
+    });
 });
 
 // basic post test
@@ -96,7 +96,7 @@ $("#stream_pagelet").find("div._4-u2.mbm._5v3q._4-u8").children($("div._3ccb._4-
 
 $("#stream_pagelet").find("div._4-u2.mbm._5v3q._4-u8").children($("div._3ccb._4-u8")).each(function(i) {
     var postObj = $(this);
-    console.log(postObj.find("div._5g-l span").length, postObj.find("a.uiStreamSponsoredLink").length)
+    console.log(postObj.find("div._5g-l span").length, postObj.find("a.uiStreamSponsoredLink").length);
 });
 
 // images
@@ -119,7 +119,7 @@ $("#stream_pagelet").find("div._4-u2.mbm._5v3q._4-u8").children($("div._3ccb._4-
             return ($(this).attr("width") > 100 || $(this).width() > 100);
         }).attr("src");
         console.log("photo", src);
-    };
+    }
 });
 
 // input fields
@@ -143,20 +143,20 @@ $("body").click(function(e) {
     if (searchFB.attr("aria-expanded") == "true") {
         console.log("lookedFocus false");
     }
-})
+});
 
 $("body").click(function(e) {
     var tag = e.target.tagName.toLowercase();
     if (tag == "input" || tag == "textarea") {
         // lookedFocused false
     }
-})
+});
 
 $("body").click(function(e) {
     var el = $(e.target);
     if (e.target.tagName.toLowerCase() == "a") {
         if (e.target.innerText == "Like") {
-            console.log("like", $(el.parents("._3ccb")[0]).find("a._5pcq").attr("href"))
+            console.log("like", $(el.parents("._3ccb")[0]).find("a._5pcq").attr("href"));
         } else if (e.target.className.toLowerCase() == "_52c6") {
             console.log(el[0].href);
         }

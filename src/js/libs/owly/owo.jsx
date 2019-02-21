@@ -1,6 +1,6 @@
-var el = document.getElementById('canvas');
+var el = document.getElementById("canvas");
 console.log(el);
-var ctx = el.getContext('2d');
+var ctx = el.getContext("2d");
 var dpr = window.devicePixelRatio || 1;
 var pi = Math.PI;
 var size = 2.3;
@@ -35,7 +35,7 @@ function random(num1, num2) {
 }
 
 var setDateTime = function setDateTime(date, str) {
-    var sp = str.split(':');
+    var sp = str.split(":");
     date.setHours(parseInt(sp[0], 10));
     date.setMinutes(parseInt(sp[1], 10));
     date.setSeconds(parseInt(sp[2], 10));
@@ -47,28 +47,28 @@ var tick = 1;
 
 // defino los colores de las gradientes
 var gradient1 = ctx.createLinearGradient(0, 0, w, 0);
-gradient1.addColorStop(0, '#850073');
-gradient1.addColorStop(1, '#f10091');
+gradient1.addColorStop(0, "#850073");
+gradient1.addColorStop(1, "#f10091");
 
 var gradient2 = ctx.createLinearGradient(0, 0, w, 0);
-gradient2.addColorStop(0, '#005b5f');
-gradient2.addColorStop(1, '#00c1d5');
+gradient2.addColorStop(0, "#005b5f");
+gradient2.addColorStop(1, "#00c1d5");
 
 var gradient3 = ctx.createLinearGradient(0, 0, w, 0);
-gradient3.addColorStop(0, '#9795f0');
-gradient3.addColorStop(1, '#9be15d');
+gradient3.addColorStop(0, "#9795f0");
+gradient3.addColorStop(1, "#9be15d");
 
 var gradient4 = ctx.createLinearGradient(0, 0, w, 0);
-gradient4.addColorStop(0, '#ff7a00');
-gradient4.addColorStop(1, '#f2d163');
+gradient4.addColorStop(0, "#ff7a00");
+gradient4.addColorStop(1, "#f2d163");
 
 var gradient5 = ctx.createLinearGradient(0, 0, w, 0);
-gradient5.addColorStop(0, '#8d734a');
-gradient5.addColorStop(1, '#f2d163');
+gradient5.addColorStop(0, "#8d734a");
+gradient5.addColorStop(1, "#f2d163");
 
 var gradients = [gradient1, gradient2, gradient3, gradient4, gradient5];
 
-window.addEventListener('mousemove', handleMove, true);
+window.addEventListener("mousemove", handleMove, true);
 
 function handleMove(event) {
     mouseY = event.clientY;
@@ -78,8 +78,8 @@ ctx.scale(dpr, dpr);
 
 el.width = w * dpr;
 el.height = h * dpr;
-el.style.width = w + 'px';
-el.style.height = h + 'px';
+el.style.width = w + "px";
+el.style.height = h + "px";
 
 // Crea los puntos del "wubbly"
 
@@ -114,7 +114,7 @@ function swingCircle() {
 
     ctx.globalAlpha = 1;
     // ctx.globalCompositeOperation = 'source-over';
-    ctx.globalCompositeOperation = 'screen';
+    ctx.globalCompositeOperation = "screen";
 
     for (var k = 0; k < circles.length; k++) {
         var _swingpoints = circles[k];
@@ -165,15 +165,15 @@ function drawCurve(pts, fillStyle) {
     ctx.fillStyle = fillStyle;
     ctx.beginPath();
     ctx.moveTo(
-    (pts[cycle(-1, points)].x + pts[0].x) / 2,
-    (pts[cycle(-1, points)].y + pts[0].y) / 2);
+        (pts[cycle(-1, points)].x + pts[0].x) / 2,
+        (pts[cycle(-1, points)].y + pts[0].y) / 2);
     for (var i = 0; i < pts.length; i++) {
 
         ctx.quadraticCurveTo(
-        pts[i].x,
-        pts[i].y,
-        (pts[i].x + pts[cycle(i + 1, points)].x) / 2,
-        (pts[i].y + pts[cycle(i + 1, points)].y) / 2);
+            pts[i].x,
+            pts[i].y,
+            (pts[i].x + pts[cycle(i + 1, points)].x) / 2,
+            (pts[i].y + pts[cycle(i + 1, points)].y) / 2);
     }
 
     ctx.closePath();
@@ -193,8 +193,8 @@ function cycle(num1, num2) {
 
 function getEyesArray() {var asleep = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     var c = new Date().getTime();
-    var start = setDateTime(new Date(), '06:00:00');
-    var end = setDateTime(new Date(), '22:30:00');
+    var start = setDateTime(new Date(), "06:00:00");
+    var end = setDateTime(new Date(), "22:30:00");
 
     if (c > start.getTime() && c < end.getTime() && !asleep) {
         return ["O", "O", "O", "O", "-", "O", "O"];
@@ -208,11 +208,11 @@ function getEyesArray() {var asleep = arguments.length > 0 && arguments[0] !== u
     function changeFace() {
         var eyesArray = getEyesArray(random(0, 1000) % 333 === 0);
         setTimeout(function () {var _iteratorNormalCompletion = true;var _didIteratorError = false;var _iteratorError = undefined;try {
-                for (var _iterator = document.querySelectorAll(".eye")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {var span = _step.value;
-                    span.innerText = eyesArray[cont];
-                }} catch (err) {_didIteratorError = true;_iteratorError = err;} finally {try {if (!_iteratorNormalCompletion && _iterator.return) {_iterator.return();}} finally {if (_didIteratorError) {throw _iteratorError;}}}
-            cont = (cont + 1) % eyesArray.length;
-            changeFace();
+            for (var _iterator = document.querySelectorAll(".eye")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {var span = _step.value;
+                span.innerText = eyesArray[cont];
+            }} catch (err) {_didIteratorError = true;_iteratorError = err;} finally {try {if (!_iteratorNormalCompletion && _iterator.return) {_iterator.return();}} finally {if (_didIteratorError) {throw _iteratorError;}}}
+        cont = (cont + 1) % eyesArray.length;
+        changeFace();
         }, random(100, 350));
     }
 
