@@ -41,13 +41,23 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
-src/js/Iconr
-src/js/libs/Iconr
-src/js/views/Iconr
-src/views/Iconr
-src/css/Iconr
-src/img/Iconr
-build/css/Iconr
-build/img/Iconr
-build/views/Iconr
-src/Iconr
+build/*
+build/views/me.html
+build/manifest.json
+build/css/fblayer.css
+build/css/fblayer.scss
+build/css/fblayer.css.map
+build/css/main.css
+build/css/main.scss
+build/css/main.css.map
+build/img/icon-128.png
+build/img/icon-128-inactive.png
+build/img/icon-19.png
+build/img/icon-19-inactive.png
+build/img/icon-48.png
+build/img/icon-48-inactive.png
+build/js/background.js
+build/js/manage.js
+build/js/me.js
+build/js/options.js
+build/js/popup.js

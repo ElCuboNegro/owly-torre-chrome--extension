@@ -9,8 +9,8 @@ window.overlayFocused = false;
 window.minLookedDuration = 3;
 window.loc = window.location.href;
 const torreusername = function(){
-    var temp = async tracer("https://torre.bio/_a/your-bio");
-    var texttemp = temp.split("/");
+    let tempvar = async tracer("https://torre.bio/_a/your-bio");
+    let texttemp = tempvar.split("/");
     return texttemp[(textemp.length - 1)];
 };
 

@@ -10,25 +10,20 @@ var copyPatterns = [
 ];
 
 module.exports = {
+    mode: "production",
     context: __dirname + "/src",
     devtool: debug ? "inline-sourcemap" : null,
     entry: {
-        content: "./js/content.js",
-        background: "./js/background.js",
-        me: "./js/views/me.js",
-        manage: "./js/views/manage.js",
-        options: "./js/views/options.js",
-        popup: "./js/views/popup.js"
+        content: "./js/content.jsx",
+        background: "./js/background.jsx",
+        me: "./js/views/me.jsx",
+        manage: "./js/views/manage.jsx",
+        options: "./js/views/options.jsx",
+        popup: "./js/views/popup.jsx"
     },
     output: {
         path: __dirname + "/build/js",
         filename: "[name].js"
-    },
-    module: {
-        loaders: [{
-            test: /\.scss$/,
-            loaders: ["style-loader", "css-loader", "sass-loader"]
-        }]
     },
     plugins: debug ? [
         new CleanWebpackPlugin(['build']),

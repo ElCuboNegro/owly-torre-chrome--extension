@@ -1,7 +1,7 @@
 require("../../css/main.scss");
-var helper = require("./me_helpers.js"),
-    dbstores = require("../dbstores.js"),
-    apiThreshold = require("../api-threshold.js"),
+var helper = require("./me_helpers.jsx"),
+    dbstores = require("../dbstores.jsx"),
+    apiThreshold = require("../api-threshold.jsx"),
     //////////////////////////////////////////////////////////////////////////
     // DEV SERVER, also need to add it to permissions
     apiUrl = "http://localhost:3000/",
