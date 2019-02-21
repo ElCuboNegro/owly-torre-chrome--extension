@@ -10,7 +10,7 @@ Work in progress. Some information might not apply.
 - you can see logs of what is happening in the background with OwO
 
 #### fix for most errors
-- "Have you tried turning it off and on again?" - refresh the Facebook tab or close and open a new one
+- "Have you tried turning it off and on again?"
 
 #### short cuts
 - url bar, type "ds" + tab
@@ -51,6 +51,7 @@ Work in progress. Some information might not apply.
 
 #### version notes
 - some permissions added for test on localhost:3000
+- webpack updated
 
 #### Known bugs
 - posts like friendship anniversaries and memories are not considered, which sometimes leads to time being added to the previously looked at post
