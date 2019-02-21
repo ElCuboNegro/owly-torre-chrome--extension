@@ -27,13 +27,8 @@ Work in progress. Some information might not apply.
 
 ###### chrome local storage
 - you can access settings, your general user data and the prediction
-    - open console in background page or OwO Me page (Alt+Cmd+J on a Mac)
+    - open console in background.
     - copy ```chrome.storage.local.get(function(data){console.log(data)})```
-    - press Enter
-
-- you can delete your prediction results to start new
-    - open console in background page or OwO Me page (Alt+Cmd+J on a Mac)
-    - copy ```chrome.storage.local.remove(["alchemy", "applymagicsauce", "personality"])```
     - press Enter
 
 * * *
