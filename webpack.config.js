@@ -13,6 +13,16 @@ module.exports = {
     mode: "production",
     context: __dirname + "/src",
     devtool: debug ? "inline-sourcemap" : null,
+    module: {
+        rules: [{
+            test: /\.scss$/,
+            use: [
+                "style-loader", // creates style nodes from JS strings
+                "css-loader", // translates CSS into CommonJS
+                "sass-loader" // compiles Sass to CSS, using Node Sass by default
+            ]
+        }]
+    },
     entry: {
         content: "./js/content.jsx",
         background: "./js/background.jsx",
