@@ -1,8 +1,8 @@
-var debug = process.env.NODE_ENV !== "prod";
-var webpack = require('webpack');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var copyPatterns = [
+const debug = process.env.NODE_ENV !== "prod";
+const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const copyPatterns = [
     { from: "./manifest.json", to: "../manifest.json" },
     { from: "./img", to: "../img" },
     { from: "./css", to: "../css" },
@@ -13,6 +13,7 @@ module.exports = {
     mode: "production",
     context: __dirname + "/src",
     devtool: debug ? "inline-sourcemap" : null,
+
     module: {
         rules: [{
             test: /\.scss$/,
