@@ -13,7 +13,9 @@
         "storage",
         "webRequest",
         "*://*/*",
-        "downloads"
+        "downloads",
+        "http://localhost:*",
+        "https://localhost:*"
     ],
     "icons": {
         "48": "img/icon-48.png",

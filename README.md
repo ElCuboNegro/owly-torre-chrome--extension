@@ -54,6 +54,9 @@ Work in progress. Some information might not apply.
 - you can now use OwO, the extension icon (the eye) should now appear in your toolbar
 - it is tracking if the eye is black (instead of gray) and if you can see a clock at the bottom left in your facebook window
 
+#### version notes
+- some permissions added for test on localhost:3000
+
 #### Known bugs
 - posts like friendship anniversaries and memories are not considered, which sometimes leads to time being added to the previously looked at post
 - when Facebook tab has been in the background for a while and you go back the clock might not show up again
@@ -61,6 +64,7 @@ Work in progress. Some information might not apply.
 - more bugs commented in source code marked with "// FIX"
 
 #### To Do List
+- fix the compiler. the compiler is not capable of handle asyn functions.
 - Test and pack
 - fix the webpack
 - finish torre integration
