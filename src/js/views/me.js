@@ -2,10 +2,9 @@ require("../../css/main.scss");
 var helper = require("./me_helpers.js"),
     dbstores = require("../dbstores.js"),
     apiThreshold = require("../api-threshold.js"),
-    apiUrl = "http://api.dataselfie.it/",
     //////////////////////////////////////////////////////////////////////////
     // DEV SERVER, also need to add it to permissions
-    // apiUrl = "http://localhost:3000/",
+    apiUrl = "http://localhost:3000/",
     db,
     d3 = require("d3"),
     body = $("body");

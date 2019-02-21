@@ -9,21 +9,21 @@ window.overlayFocused = false;
 window.minLookedDuration = 3;
 window.loc = window.location.href;
 const torreusername = function(){
-    var temp = await tracer("https://torre.bio/_a/your-bio");
-    var texttemp = temp.split("/")
+    var temp = async tracer("https://torre.bio/_a/your-bio");
+    var texttemp = temp.split("/");
     return texttemp[(textemp.length - 1)];
 };
 
-var torreprofiles1degree = [];
-var torreprofiles2degree = [];
-var torreprofiles3degree = [];
+let torreprofiles1degree = [];
+let torreprofiles2degree = [];
+let torreprofiles3degree = [];
 
-let helper = require("./content_helpers.js"),
-    torreurl = "https://torre.bio/api/people/"+torreusername+"/connections",
-    looked = require("./content_looked.js"),
-    typed = require("./content_typed.js"),
-    throttle = require('throttle-debounce/throttle'),
-    kickoff = {
+let helper = require("./content_helpers.js");
+let torreurl = "https://torre.bio/api/people/"+torreusername+"/connections";
+let looked = require("./content_looked.js");
+let typed = require("./content_typed.js");
+let throttle = require('throttle-debounce/throttle');
+let kickoff = {
         getProfilesList: function () {
             let request = new XMLHttpRequest();
             request.open('GET', torreurl)
@@ -152,8 +152,8 @@ let helper = require("./content_helpers.js"),
                 }
             });
         }
-    },
-    clicked = {
+    };
+let clicked = {
         init: function() {
             $("body").click(function(e) {
                 var el = $(e.target);

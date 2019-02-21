@@ -9,23 +9,19 @@ window.overlayFocused = false;
 window.minLookedDuration = 3;
 window.loc = window.location.href;
 const torreusername = function(){
-    if(xhr.status === 200){
-        var PageHeader = xhr.getResponseHeader("LoginPage");
-        if(loginPageHeader && loginPageHeader !== ""){
-            window.location.replace(loginPageHeader);
-        }
+
+    let temp = async function(){
+        let temp = await tracer("https://torre.bio/_a/your-bio");
+        return temp;
     }
 
-
-
-    var temp = await tracer("https://torre.bio/_a/your-bio");
-    var texttemp = temp.split("/")
+    let texttemp = temp.split("/")
     return texttemp[(textemp.length - 1)];
 };
 
-var torreprofiles1degree = [];
-var torreprofiles2degree = [];
-var torreprofiles3degree = [];
+let torreprofiles1degree = [];
+let torreprofiles2degree = [];
+let torreprofiles3degree = [];
 
 let helper = require("./content_helpers.js"),
     torreurl = "https://torre.bio/api/people/"+torreusername+"/connections",
