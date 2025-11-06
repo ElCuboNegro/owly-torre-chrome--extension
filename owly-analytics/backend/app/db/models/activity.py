@@ -2,7 +2,7 @@
 from datetime import datetime
 from typing import Optional
 
-from sqlalchemy import String, Integer, Float, DateTime, Text, JSON, Boolean
+from sqlalchemy import String, Integer, Float, DateTime, Text, JSON, Boolean, ARRAY
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -31,16 +31,36 @@ class PageView(Base):
     scroll_depth: Mapped[float] = mapped_column(Float, default=0.0)  # 0-1
     scroll_speed: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
 
+    # Page Content (extracted from DOM)
+    content: Mapped[Optional[str]] = mapped_column(Text, nullable=True)  # Main article text
+    full_content: Mapped[Optional[str]] = mapped_column(Text, nullable=True)  # All text
+    word_count: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    meta_description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+    # Media and Links
+    image_urls: Mapped[Optional[list]] = mapped_column(JSON, nullable=True)  # List of image URLs
+    link_urls: Mapped[Optional[list]] = mapped_column(JSON, nullable=True)  # List of links
+
+    # Content metrics
+    has_video: Mapped[bool] = mapped_column(Boolean, default=False)
+    has_audio: Mapped[bool] = mapped_column(Boolean, default=False)
+    has_code: Mapped[bool] = mapped_column(Boolean, default=False)
+
     # Content classification (will be filled by ML later)
     content_type: Mapped[Optional[str]] = mapped_column(String, nullable=True, index=True)
     category: Mapped[Optional[str]] = mapped_column(String, nullable=True, index=True)
     is_adult: Mapped[bool] = mapped_column(Boolean, default=False, index=True)
 
+    # ML-generated fields (to be populated by backend processing)
+    topics: Mapped[Optional[list]] = mapped_column(JSON, nullable=True)  # ["technology", "AI"]
+    sentiment_score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)  # -1 to 1
+    language: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
     # Context
     referrer: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     session_id: Mapped[Optional[str]] = mapped_column(String, nullable=True, index=True)
 
-    # Additional data (flexible JSON)
+    # Additional data (flexible JSON for anything else)
     metadata: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
 
 

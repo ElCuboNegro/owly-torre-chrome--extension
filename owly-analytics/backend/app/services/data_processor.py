@@ -28,14 +28,38 @@ class DataProcessor:
             result = await self.db.execute(select(PageView).where(PageView.id == pv.id))
             existing = result.scalar_one_or_none()
 
+            # Extract content fields from metadata if present
+            pv_dict = pv.model_dump()
+            metadata = pv_dict.get('metadata', {})
+
+            # Extract content-specific fields
+            if metadata:
+                pv_dict['content'] = metadata.get('content')
+                pv_dict['full_content'] = metadata.get('fullContent')
+                pv_dict['word_count'] = metadata.get('wordCount')
+                pv_dict['meta_description'] = metadata.get('metaDescription')
+                pv_dict['image_urls'] = metadata.get('images', [])
+                pv_dict['link_urls'] = metadata.get('links', [])
+                pv_dict['has_video'] = metadata.get('hasVideo', False)
+                pv_dict['has_audio'] = metadata.get('hasAudio', False)
+                pv_dict['has_code'] = metadata.get('hasCodeBlocks', False)
+                pv_dict['language'] = metadata.get('language')
+
+                # Keep other metadata that doesn't have specific columns
+                clean_metadata = {k: v for k, v in metadata.items()
+                                if k not in ['content', 'fullContent', 'wordCount',
+                                           'metaDescription', 'images', 'links',
+                                           'hasVideo', 'hasAudio', 'hasCodeBlocks', 'language']}
+                pv_dict['metadata'] = clean_metadata if clean_metadata else None
+
             if existing:
                 # Update existing
-                for key, value in pv.model_dump().items():
+                for key, value in pv_dict.items():
                     setattr(existing, key, value)
                 db_page_views.append(existing)
             else:
                 # Create new
-                db_pv = PageView(**pv.model_dump())
+                db_pv = PageView(**pv_dict)
                 self.db.add(db_pv)
                 db_page_views.append(db_pv)
 

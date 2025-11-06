@@ -3,6 +3,7 @@
  */
 
 import { generateId, getDomain, now } from '../shared/utils/helpers';
+import { ContentExtractor } from './ContentExtractor';
 
 export class PageTracker {
   private pageId: string;
@@ -13,11 +14,14 @@ export class PageTracker {
   private isActive: boolean = true;
   private maxScrollDepth: number = 0;
   private activityCheckInterval?: number;
+  private contentExtractor: ContentExtractor;
+  private contentExtracted: boolean = false;
 
   constructor() {
     this.pageId = generateId();
     this.startTime = Date.now();
     this.lastActivityTime = Date.now();
+    this.contentExtractor = new ContentExtractor();
 
     this.init();
   }
@@ -112,6 +116,22 @@ export class PageTracker {
    * Get page data
    */
   private getPageData() {
+    // Extract content once when page is likely loaded
+    // (after first few seconds of activity)
+    let content = undefined;
+    if (!this.contentExtracted && this.getTimeOnPage() > 2) {
+      try {
+        content = this.contentExtractor.extractPageContent();
+        this.contentExtracted = true;
+        console.log('[PageTracker] Extracted content:', {
+          wordCount: content.metadata.wordCount,
+          imageCount: content.images.length,
+        });
+      } catch (error) {
+        console.error('[PageTracker] Failed to extract content:', error);
+      }
+    }
+
     return {
       id: this.pageId,
       url: window.location.href,
@@ -123,6 +143,17 @@ export class PageTracker {
       idleTime: this.idleTime,
       scrollDepth: Math.min(this.maxScrollDepth, 1),
       referrer: document.referrer || undefined,
+      metadata: {
+        // Include extracted content if available
+        ...(content && {
+          content: content.mainText,
+          fullContent: content.fullText,
+          metaDescription: content.metaDescription,
+          images: content.images,
+          links: content.links,
+          ...content.metadata,
+        }),
+      },
     };
   }
 
