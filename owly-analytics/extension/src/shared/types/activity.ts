@@ -64,3 +64,40 @@ export interface InteractionBatch {
 export interface TypedContentBatch {
   typedContent: TypedContent[];
 }
+
+export interface VideoPlayback {
+  id: string;
+  timestamp: string; // ISO string
+  url: string; // Page URL
+  videoSrc?: string; // Video source URL
+  pageUrl: string; // Page where video was watched
+  platform?: string; // 'youtube', 'netflix', 'vimeo', etc.
+
+  // Video info
+  title?: string;
+  channel?: string;
+  duration: number; // Total video duration in seconds
+  width?: number;
+  height?: number;
+
+  // Playback metrics
+  watchedDuration: number; // Actual seconds watched
+  completionRate: number; // 0-1
+  maxWatchedPosition: number; // Furthest point reached
+
+  // Behavior
+  playCount: number;
+  pauseCount: number;
+  seekEvents?: Array<{ from: number; to: number }>;
+  watchedSegments?: Array<{ start: number; end: number }>;
+  playbackSpeed: number;
+  wasFullscreen: boolean;
+
+  // Context
+  sessionId?: string;
+  metadata?: Record<string, any>;
+}
+
+export interface VideoPlaybackBatch {
+  videoPlaybacks: VideoPlayback[];
+}

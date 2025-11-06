@@ -7,12 +7,14 @@ import type {
   PageView,
   Interaction,
   TypedContent,
+  VideoPlayback,
 } from '../shared/types/activity';
 
 interface QueueData {
   pageViews: PageView[];
   interactions: Interaction[];
   typedContent: TypedContent[];
+  videoPlaybacks: VideoPlayback[];
 }
 
 export class DataQueue {
@@ -20,6 +22,7 @@ export class DataQueue {
     pageViews: [],
     interactions: [],
     typedContent: [],
+    videoPlaybacks: [],
   };
 
   private flushInterval: number = 60000; // 1 minute
@@ -67,6 +70,18 @@ export class DataQueue {
   }
 
   /**
+   * Add video playback to queue
+   */
+  addVideoPlayback(videoPlayback: VideoPlayback): void {
+    this.queue.videoPlaybacks.push(videoPlayback);
+    console.log('[DataQueue] Added video playback:', videoPlayback.url);
+
+    if (this.queue.videoPlaybacks.length >= this.maxBatchSize) {
+      this.flush('videoPlaybacks');
+    }
+  }
+
+  /**
    * Flush specific queue or all queues
    */
   async flush(type?: keyof QueueData): Promise<void> {
@@ -85,6 +100,7 @@ export class DataQueue {
       this.flushQueue('pageViews'),
       this.flushQueue('interactions'),
       this.flushQueue('typedContent'),
+      this.flushQueue('videoPlaybacks'),
     ]);
   }
 
@@ -113,6 +129,11 @@ export class DataQueue {
         case 'typedContent':
           await apiClient.sendTypedContent({
             typedContent: items as TypedContent[],
+          });
+          break;
+        case 'videoPlaybacks':
+          await apiClient.sendVideoPlayback({
+            videoPlaybacks: items as VideoPlayback[],
           });
           break;
       }
@@ -158,10 +179,12 @@ export class DataQueue {
       pageViews: this.queue.pageViews.length,
       interactions: this.queue.interactions.length,
       typedContent: this.queue.typedContent.length,
+      videoPlaybacks: this.queue.videoPlaybacks.length,
       total:
         this.queue.pageViews.length +
         this.queue.interactions.length +
-        this.queue.typedContent.length,
+        this.queue.typedContent.length +
+        this.queue.videoPlaybacks.length,
     };
   }
 }

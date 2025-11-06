@@ -9,6 +9,7 @@ from app.schemas.activity import (
     TypedContentBatch,
     SessionCreate,
     SessionUpdate,
+    VideoPlaybackBatch,
 )
 from app.services.data_processor import DataProcessor
 
@@ -117,3 +118,23 @@ async def update_session(
         }
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+
+@router.post("/video-playback")
+async def ingest_video_playback(
+    data: VideoPlaybackBatch,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Ingest video playback data from extension.
+
+    Tracks video watching behavior across all platforms.
+    """
+    processor = DataProcessor(db)
+    stored = await processor.store_video_playbacks(data.video_playbacks)
+
+    return {
+        "success": True,
+        "processed": len(stored),
+        "message": f"Stored {len(stored)} video playback records",
+    }

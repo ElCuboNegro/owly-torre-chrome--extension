@@ -85,3 +85,44 @@ class SessionUpdate(BaseModel):
     page_views: Optional[int] = Field(default=None, ge=0)
     interactions: Optional[int] = Field(default=None, ge=0)
     metadata: Optional[Dict[str, Any]] = None
+
+
+class VideoPlaybackCreate(BaseModel):
+    """Schema for creating a video playback record."""
+
+    id: str
+    timestamp: datetime
+    url: str
+    video_src: Optional[str] = None
+    page_url: str
+    platform: Optional[str] = None
+
+    # Video info
+    title: Optional[str] = None
+    channel: Optional[str] = None
+    duration: int = Field(..., ge=0)
+    width: Optional[int] = None
+    height: Optional[int] = None
+
+    # Playback metrics
+    watched_duration: int = Field(..., ge=0)
+    completion_rate: float = Field(..., ge=0.0, le=1.0)
+    max_watched_position: int = Field(..., ge=0)
+
+    # Behavior
+    play_count: int = Field(default=0, ge=0)
+    pause_count: int = Field(default=0, ge=0)
+    seek_events: Optional[List[Dict[str, int]]] = None
+    watched_segments: Optional[List[Dict[str, int]]] = None
+    playback_speed: float = Field(default=1.0, gt=0.0)
+    was_fullscreen: bool = False
+
+    # Context
+    session_id: Optional[str] = None
+    metadata: Optional[Dict[str, Any]] = None
+
+
+class VideoPlaybackBatch(BaseModel):
+    """Batch of video playback records."""
+
+    video_playbacks: List[VideoPlaybackCreate]

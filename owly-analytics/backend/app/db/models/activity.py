@@ -137,3 +137,51 @@ class Session(Base):
 
     # Additional data
     metadata: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
+
+
+class VideoPlayback(Base):
+    """Track video playback across all platforms."""
+
+    __tablename__ = "video_playback"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True)
+    timestamp: Mapped[datetime] = mapped_column(DateTime, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    # Video identity
+    url: Mapped[str] = mapped_column(Text, index=True)  # Page URL
+    video_src: Mapped[Optional[str]] = mapped_column(Text, nullable=True)  # Video source URL
+    page_url: Mapped[str] = mapped_column(Text)  # Page where video was watched
+    platform: Mapped[Optional[str]] = mapped_column(String, nullable=True, index=True)  # youtube, netflix, vimeo, etc.
+
+    # Video info
+    title: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    channel: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    duration: Mapped[int] = mapped_column(Integer)  # Total video duration in seconds
+    width: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    height: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+
+    # Playback metrics
+    watched_duration: Mapped[int] = mapped_column(Integer)  # Actual seconds watched
+    completion_rate: Mapped[float] = mapped_column(Float)  # 0-1
+    max_watched_position: Mapped[int] = mapped_column(Integer)  # Furthest point reached
+
+    # Behavior
+    play_count: Mapped[int] = mapped_column(Integer, default=0)
+    pause_count: Mapped[int] = mapped_column(Integer, default=0)
+    seek_events: Mapped[Optional[list]] = mapped_column(JSON, nullable=True)  # [{from, to}]
+    watched_segments: Mapped[Optional[list]] = mapped_column(JSON, nullable=True)  # [{start, end}]
+    playback_speed: Mapped[float] = mapped_column(Float, default=1.0)
+    was_fullscreen: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    # Context
+    session_id: Mapped[Optional[str]] = mapped_column(String, nullable=True, index=True)
+
+    # ML fields (for future content analysis)
+    topics: Mapped[Optional[list]] = mapped_column(JSON, nullable=True)
+    category: Mapped[Optional[str]] = mapped_column(String, nullable=True, index=True)
+    is_adult: Mapped[bool] = mapped_column(Boolean, default=False, index=True)
+    language: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
+    # Additional data
+    metadata: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)

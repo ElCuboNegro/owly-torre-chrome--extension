@@ -6,7 +6,7 @@
 import { DataQueue } from './DataQueue';
 import { apiClient } from '../shared/api/client';
 import { generateId, now } from '../shared/utils/helpers';
-import type { PageView, Interaction, TypedContent } from '../shared/types/activity';
+import type { PageView, Interaction, TypedContent, VideoPlayback } from '../shared/types/activity';
 
 console.log('[Background] Service worker starting...');
 
@@ -96,6 +96,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse({ success: true });
       break;
 
+    case 'VIDEO_PLAYBACK':
+      handleVideoPlayback(message.data);
+      sendResponse({ success: true });
+      break;
+
     case 'GET_SESSION_ID':
       sendResponse({ sessionId: currentSessionId });
       break;
@@ -169,6 +174,38 @@ function handleTypedContent(data: Partial<TypedContent>) {
   };
 
   dataQueue.addTypedContent(typedContent);
+}
+
+/**
+ * Handle video playback data
+ */
+function handleVideoPlayback(data: Partial<VideoPlayback>) {
+  const videoPlayback: VideoPlayback = {
+    id: data.id || generateId(),
+    timestamp: data.timestamp || now(),
+    url: data.url!,
+    videoSrc: data.videoSrc,
+    pageUrl: data.pageUrl!,
+    platform: data.platform,
+    title: data.title,
+    channel: data.channel,
+    duration: data.duration || 0,
+    width: data.width,
+    height: data.height,
+    watchedDuration: data.watchedDuration || 0,
+    completionRate: data.completionRate || 0,
+    maxWatchedPosition: data.maxWatchedPosition || 0,
+    playCount: data.playCount || 0,
+    pauseCount: data.pauseCount || 0,
+    seekEvents: data.seekEvents,
+    watchedSegments: data.watchedSegments,
+    playbackSpeed: data.playbackSpeed || 1.0,
+    wasFullscreen: data.wasFullscreen || false,
+    sessionId: currentSessionId || undefined,
+    metadata: data.metadata,
+  };
+
+  dataQueue.addVideoPlayback(videoPlayback);
 }
 
 /**

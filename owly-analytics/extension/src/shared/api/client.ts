@@ -6,6 +6,7 @@ import type {
   PageViewBatch,
   InteractionBatch,
   TypedContentBatch,
+  VideoPlaybackBatch,
   Session,
 } from '../types/activity';
 import type { ServerHealth, AnalyticsOverview } from '../types/api';
@@ -67,6 +68,13 @@ class APIClient {
 
   async sendTypedContent(data: TypedContentBatch): Promise<any> {
     return this.request('/api/v1/data/typed-content', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async sendVideoPlayback(data: VideoPlaybackBatch): Promise<any> {
+    return this.request('/api/v1/data/video-playback', {
       method: 'POST',
       body: JSON.stringify(data),
     });

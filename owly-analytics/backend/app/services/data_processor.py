@@ -3,13 +3,14 @@ from typing import List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from app.db.models import PageView, Interaction, TypedContent, Session
+from app.db.models import PageView, Interaction, TypedContent, Session, VideoPlayback
 from app.schemas.activity import (
     PageViewCreate,
     InteractionCreate,
     TypedContentCreate,
     SessionCreate,
     SessionUpdate,
+    VideoPlaybackCreate,
 )
 
 
@@ -130,3 +131,31 @@ class DataProcessor:
 
         await self.db.flush()
         return db_session
+
+    async def store_video_playbacks(
+        self, video_playbacks: List[VideoPlaybackCreate]
+    ) -> List[VideoPlayback]:
+        """Store video playback records in database."""
+        db_video_playbacks = []
+
+        for vp in video_playbacks:
+            # Check if already exists
+            result = await self.db.execute(
+                select(VideoPlayback).where(VideoPlayback.id == vp.id)
+            )
+            existing = result.scalar_one_or_none()
+
+            if existing:
+                # Update existing
+                vp_dict = vp.model_dump()
+                for key, value in vp_dict.items():
+                    setattr(existing, key, value)
+                db_video_playbacks.append(existing)
+            else:
+                # Create new
+                db_vp = VideoPlayback(**vp.model_dump())
+                self.db.add(db_vp)
+                db_video_playbacks.append(db_vp)
+
+        await self.db.flush()
+        return db_video_playbacks
